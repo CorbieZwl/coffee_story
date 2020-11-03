@@ -1,0 +1,184 @@
+﻿{% extends 'index.html' %}
+{% block body %}
+<!-- Subheader Start -->
+<div class="andro_subheader pattern-bg primary-bg">
+  <div class="container">
+    <div class="andro_subheader-inner">
+      <h1>Cart</h1>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Shop</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Cart</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- Subheader End -->
+
+<!--Cart Start -->
+<div class="section">
+  <div class="container">
+
+    <!-- Cart Table Start -->
+    <div id="gouwuche"></div>
+    <!-- Cart Table End -->
+
+    <!-- Coupon Code Start -->
+    <div class="row">
+      <div class="col-lg-5">
+        <div class="form-group mb-0">
+          <div class="input-group mb-0">
+             <div class="andro_btn-custom primary btn-block" id="lijizf">立即购买</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Coupon Code End -->
+
+  </div>
+</div>
+<!-- Cart End -->
+
+<!-- Cart form Start -->
+<div class="section pt-0" id="ooo">
+  <div class="container">
+
+
+    </div>
+
+  </div>
+</div>
+<!-- Cart form End -->
+<script>
+  var token = window.localStorage.getItem('cofst_token');
+  var user_id = window.localStorage.getItem('cofst_userid');
+  var url = document.location.toString();
+  var get_url = `http://176.215.122.8:8000/v1/cart/${user_id}`;
+  var html_body = '';
+
+
+  $("#lijizf").click(function(){
+    var goods = []
+    $.each($('.goods-num'),function(i,o){
+      goods.push({
+        "goods_id":o.getAttribute("data"),
+        "num":o.getAttribute('num')
+      })
+
+    })
+    var cofst_indent = {"host":"cart","goods":goods}
+    cofst_indent = JSON.stringify(cofst_indent)
+    window.localStorage.setItem("cofst_indent",cofst_indent)
+    window.location.href = '/checkout'
+  })
+
+
+
+  $.ajax({
+    type: "get",
+    url: get_url,
+    beforeSend: function (request) {
+      request.setRequestHeader("Authorization", token);
+    },
+    success: function (res) {
+      console.log(res)
+      var co = res.data;
+      if (res.code == 200) {
+        if (co.length == 0) {
+          html_body = '<h2>空空如也</h2>'
+          $('#lijizf').attr('style','display: none;')
+        }
+        else {
+          html_body += '<table class="andro_responsive-table">';
+          html_body += '<thead>';
+          html_body += '<tr>';
+          html_body += '<th class="remove-item"></th>';
+          html_body += '<th>产品</th>';
+          html_body += '<th>价格</th>';
+          html_body += '<th>数量<span id="info"></span></th>';
+          html_body += '<th>总价</th>';
+          html_body += '</tr>';
+          html_body += '</thead>';
+          html_body += '<tbody>';
+          for (var t in co) {
+            var name = co[t].name;
+            var price = co[t].price;
+            var imgurl = co[t].imgurl;
+            var id = co[t].id;
+            var number = co[t].number;
+            html_body += '<tr>';
+            html_body += '<td class="remove" data=' + id + '>';
+            html_body += '<button type="button" class="close-btn close-danger remove-from-cart">';
+            html_body += '<span></span>';
+            html_body += '<span></span>';
+            html_body += '</button>';
+            html_body += '</td>';
+            html_body += '<td data-title="Product">';
+            html_body += '<div class="andro_cart-product-wrapper">';
+            html_body += `<img src="${imgurl}" alt="prod1">`;
+            html_body += '<div class="andro_cart-product-body">';
+            html_body += `<h6> <a href="#">${name}</a> </h6>`;
+            html_body += '</div>';
+            html_body += '</div>';
+            html_body += '</td>';
+            html_body += `<td data-title="Price"> <strong>${price}</strong> </td>`;
+            html_body += '<td class="quantity" data-title="Quantity">';
+            html_body += `<input type="number" class="goods-num" placeholder="请输入数量" num='${number}' data="${id}"><span class="num">数量：${number}</span>`;
+            html_body += '</td>';
+            html_body += `<td data-title="Total"> <strong>${(price) * number}</strong> </td>`;
+            html_body += '</tr>';
+          }
+          html_body += '</tbody></table>';
+        }
+        $("#gouwuche").append(html_body);
+        $('.remove').on('click', function () {
+          var delete_id = $(this).attr('data');
+          // alert(delete_id);
+          var delete_url = `http://176.215.122.8:8000/v1/cart/${user_id}/goods_id/${delete_id}`;
+          $.ajax({
+            type: 'delete',
+            url: delete_url,
+            beforeSend: function (request) {
+              request.setRequestHeader("Authorization", token);
+            },
+            success: function (res) {
+              if (res.code == 200) {
+                alert('删除成功');
+                window.location.reload()
+              } else {
+                alert('删除失败');
+              }
+            }
+          })
+        });
+        $('.goods-num').blur(function () {
+          // alert('ok')
+          var num = $(this).val();
+          var cart_goods_id = $(this).attr('data');
+          $.ajax({
+            url: `http://176.215.122.8:8000/v1/cart/${user_id}/${cart_goods_id}/${num}`,
+            type: 'put',
+            success: function (res) {
+              if (res.code == 200) {
+                $('#info').html(`<div style='color:red;'>${res.data}</div>`)
+                if (res.data.length == 0) {
+                  window.location.reload()
+                }
+              }
+              else {
+                alert(res.data)
+              }
+            }
+          })
+        })
+      }
+      else {
+        alert(res.error)
+        window.location.href='/login'
+      }
+    }
+  });
+</script>
+{% endblock %}

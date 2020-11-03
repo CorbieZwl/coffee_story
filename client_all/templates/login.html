@@ -1,0 +1,803 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffeez - Coffee Shop HTML Template</title>
+
+  <!-- Vendor Stylesheets -->
+  <link rel="stylesheet" href="/static/css/plugins/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/plugins/animate.min.css">
+  <link rel="stylesheet" href="/static/css/plugins/magnific-popup.css">
+  <link rel="stylesheet" href="/static/css/plugins/slick.css">
+  <link rel="stylesheet" href="/static/css/plugins/slick-theme.css">
+  <link rel="stylesheet" href="/static/css/plugins/ion.rangeSlider.min.css">
+
+  <!-- Icon Fonts -->
+  <link rel="stylesheet" href="/static/fonts/flaticon/flaticon.css">
+  <link rel="stylesheet" href="/static/fonts/font-awesome/css/all.min.css">
+
+  <!-- Coffeez Style sheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.ico">
+  <script src="/static/js/jquery.min.js"></script>
+
+</head>
+
+<body>
+  <script>
+    $("document").ready(function(){
+    var token = window.localStorage.getItem("cofst_token");
+    var user_id = window.localStorage.getItem("cofst_userid");
+
+      $.ajax({
+        url:`http://176.215.122.8:8000/v1/user/${user_id}`,
+        type:"GET",
+        beforeSend:function(request){
+          request.setRequestHeader('Authorization',token)
+        },
+        // 传输的数据类型
+        contentType:"application/json",
+        // 接收的数据类型
+        dataType:"json",
+        success:function(res){
+          if (res.code == 200){
+            window.location.href = '/index';
+          }
+
+        },
+
+
+      })
+    })
+  </script>
+  
+  <!-- Prealoder start -->
+  <div class="andro_preloader">
+    <div class="spinner">
+      <div class="dot1"></div>
+      <div class="dot2"></div>
+    </div>
+  </div>
+  <!-- Prealoader End -->
+
+  <!-- Newsletter Modal Start -->
+  <div class="modal fade" id="androNewsletterPopup" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog andro_newsletter-popup-modal modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <img src="/static/img/ig/3.jpg" alt="newsletter">
+          <div class="close-btn close newsletter-popup-trigger" data-dismiss="modal">
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div class="modal-body">
+
+          <div class="andro_newsletter-popup-text-wrapper">
+            <h3>Join Our Newsletter</h3>
+            <p>Sed porttitor lectus nibh. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Curabitur aliquet quam id dui posuere.</p>
+          </div>
+
+          <form method="post" class="text-center">
+            <div class="form-group">
+              <input type="email" placeholder="Email Address" class="form-control" name="newsletter-email" value="">
+            </div>
+            <button type="submit" class="andro_btn-custom" name="button">Subscribe</button>
+            <span class="newsletter-popup-trigger" data-dismiss="modal">No Thanks</span>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Newsletter Modal End -->
+
+  <!-- Quick View Modal Start -->
+  <div class="modal fade andro_quick-view-modal" id="quickViewModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+
+          <div class="close-btn close-dark close" data-dismiss="modal">
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-5">
+                <img src="/static/img/products/9.png" alt="product">
+              </div>
+              <div class="col-md-7">
+
+                <div class="andro_product-single-content">
+
+                  <div class="andro_rating-wrapper">
+                    <div class="andro_rating">
+                      <i class="fa fa-star active"></i>
+                      <i class="fa fa-star active"></i>
+                      <i class="fa fa-star active"></i>
+                      <i class="fa fa-star active"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <span>4 Stars</span>
+                  </div>
+
+                  <h3>Cold brewed</h3>
+
+                  <div class="andro_product-price">
+                    <span>8$</span>
+                    <span>14$</span>
+                  </div>
+
+                  <p class="andro_product-excerpt">Cras ultricies ligula sed magna dictum porta. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
+
+                  <form class="andro_product-atc-form">
+
+                    <div class="andro_product-variation-wrapper">
+                      <div class="form-group">
+                        <select class="form-control" name="amount">
+                          <option value="">Select Amount</option>
+                          <option value="1">1 Packet</option>
+                          <option value="2">Packets </option>
+                          <option value="3">3 Packets </option>
+                          <option value="4">4 Packets </option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <select class="form-control" name="breed">
+                          <option value="">Select a Breed</option>
+                          <option value="italian">Italian</option>
+                          <option value="egyptian">Egyptian</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="qty-outter">
+                      <a href="product-single.html" class="andro_btn-custom">Buy Now</a>
+                      <div class="qty">
+                        <span class="qty-subtract"><i class="fa fa-minus"></i></span>
+                        <input type="text" name="qty" value="1">
+                        <span class="qty-add"><i class="fa fa-plus"></i></span>
+                      </div>
+                    </div>
+
+                  </form>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Quick View Modal End -->
+
+  <!-- Aside (Right Panel) -->
+  <aside class="andro_aside andro_aside-right">
+    <div class="sidebar">
+
+      <!-- Popular Categories Start -->
+      <div class="sidebar-widget widget-categories-icons">
+        <h5 class="widget-title">Popular Categories</h5>
+        <div class="row">
+
+          <div class="col-lg-6">
+            <div class="andro_icon-block text-center has-link">
+              <a href="#">
+                <i class="flaticon-coffee-cup"></i>
+                <h5>Cafe Latte</h5>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="andro_icon-block text-center has-link">
+              <a href="#">
+                <i class="flaticon-coffee"></i>
+                <h5>Ice Coffee</h5>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="andro_icon-block text-center has-link">
+              <a href="#">
+                <i class="flaticon-coffee-beans"></i>
+                <h5>Mocha</h5>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="andro_icon-block text-center has-link">
+              <a href="#">
+                <i class="flaticon-coffee-1"></i>
+                <h5>Espresso</h5>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="andro_icon-block text-center has-link">
+              <a href="#">
+                <i class="flaticon-ice-coffee"></i>
+                <h5>Cappucino</h5>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="andro_icon-block text-center has-link">
+              <a href="#">
+                <i class="flaticon-moka-pot"></i>
+                <h5>Arabica</h5>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- Popular Categories End -->
+
+      <!-- Popular Tags Start -->
+      <div class="sidebar-widget">
+        <h5 class="widget-title">Popular Tags</h5>
+        <div class="tagcloud">
+          <a href="#">Creamy</a>
+          <a href="#">Cafe Latte</a>
+          <a href="#">Darker</a>
+          <a href="#">Coffee</a>
+          <a href="#">Nescafes</a>
+          <a href="#">Green</a>
+          <a href="#">Robusta Roasted</a>
+          <a href="#">Mocha</a>
+          <a href="#">Gain</a>
+          <a href="#">Arabica Green</a>
+          <a href="#">Robusta</a>
+        </div>
+      </div>
+      <!-- Popular Tags End -->
+
+    </div>
+  </aside>
+  <div class="andro_aside-overlay aside-trigger-right"></div>
+
+  <!-- Aside (Mobile Navigation) -->
+  <aside class="andro_aside andro_aside-left">
+    <a class="navbar-brand" href="index.html"> <img src="/static/img/logo.png" alt="logo"> </a>
+
+    <ul>
+      <li class="menu-item menu-item-has-children">
+        <a href="#">Home Pages</a>
+        <ul class="sub-menu">
+          <li class="menu-item"> <a href="index.html">Home v1</a> </li>
+          <li class="menu-item"> <a href="home-v2.html">Home v2</a> </li>
+          <li class="menu-item"> <a href="home-v3.html">Home v3</a> </li>
+        </ul>
+      </li>
+      <li class="menu-item menu-item-has-children">
+        <a href="#">Blog</a>
+        <ul class="sub-menu">
+          <li class="menu-item menu-item-has-children">
+            <a href="blog-grid.html">Blog Archive</a>
+            <ul class="sub-menu">
+              <li class="menu-item"> <a href="blog-grid.html">Grid View</a> </li>
+              <li class="menu-item"> <a href="blog-list.html">List View</a> </li>
+              <li class="menu-item"> <a href="blog-masonry.html">Masonry View</a> </li>
+            </ul>
+          </li>
+          <li class="menu-item"> <a href="post-single.html">Blog Single</a> </li>
+        </ul>
+      </li>
+      <li class="menu-item menu-item-has-children">
+        <a href="#">Pages</a>
+        <ul class="sub-menu">
+          <li class="menu-item"> <a href="about-us.html">About Us</a> </li>
+          <li class="menu-item"> <a href="login.html">Login</a> </li>
+          <li class="menu-item"> <a href="register.html">Sign Up</a> </li>
+          <li class="menu-item"> <a href="checkout.html">Checkout</a> </li>
+          <li class="menu-item"> <a href="cart.html">Cart</a> </li>
+          <li class="menu-item"> <a href="wishlist.html">Wish List</a> </li>
+          <li class="menu-item"> <a href="legal.html">Legal</a> </li>
+          <li class="menu-item"> <a href="error.html">Error 404</a> </li>
+        </ul>
+      </li>
+      <li class="menu-item menu-item-has-children">
+        <a href="#">Shop Pages</a>
+        <ul class="sub-menu">
+          <li class="menu-item"> <a href="shop-v1.html"> Shop v1 (Default) </a> </li>
+          <li class="menu-item"> <a href="shop-v2.html"> Shop v2 (Full Width) </a> </li>
+          <li class="menu-item"> <a href="shop-v3.html"> Shop v3 (No Sidebar) </a> </li>
+          <li class="menu-item"> <a href="shop-v4.html"> Shop v4 (List view) </a> </li>
+        </ul>
+      </li>
+      <li class="menu-item"> <a href="contact-us.html">Contact Us</a> </li>
+    </ul>
+
+  </aside>
+  <div class="andro_aside-overlay aside-trigger-left"></div>
+
+  <!-- Header Start -->
+  <header class="andro_header header-3 can-sticky">
+
+    <!-- Topheader Start -->
+    <div class="andro_header-top">
+      <div class="container">
+        <div class="andro_header-top-inner">
+          <ul class="andro_header-top-sm andro_sm">
+            <li> <a href="#"> <i class=""></i> </a> </li>
+            <li> <a href="#"> <i class=""></i> </a> </li>
+            <li> <a href="#"> <i class=""></i> </a> </li>
+            <li> <a href="#"> <i class=""></i> </a> </li>
+          </ul>
+          <ul class="andro_header-top-links">
+            <li class="menu-item"><a href="/login"> 登陆 </a></li>
+            <li class="menu-item"> / </li>
+            <li class="menu-item"><a href="/register"> 注册</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Topheader End -->
+
+    <!-- Middle Header Start -->
+
+    <!-- Middle Header End -->
+
+    <!-- Bottom Header Start -->
+    <div class="andro_header-bottom">
+      <div class="container">
+
+        <div class="andro_header-bottom-inner">
+
+          <div class="andro_category-mm">
+            <div class="andro_category-mm-header">
+              <h6> <i class="fas fa-th-large"></i> Categories</h6>
+            </div>
+            <div class="andro_category-mm-body">
+
+              <ul>
+                <!-- Level 1 -->
+
+                <li class="andro_category-mm-item andro_category-mm-item-has-children">
+                  <a href="#"> Cafe Latte </a>
+                  <ul class="andro_category-mm-2-cols">
+                    <!-- Level 2 -->
+                    <li>
+                      <div class="andro_category-mm-banner">
+                        <img src="/static/img/megamenu/1.jpg" alt="megamenu img">
+                        <div class="andro_category-mm-banner-desc">
+                          <h6>Cafe Latte</h6>
+                          <p>Experience fresh coffee  like never before</p>
+                        </div>
+                      </div>
+                      <ul>
+                        <li> <a href="#">Espresso and milk</a> </li>
+                        <li> <a href="#">Pumpkin Pottage</a> </li>
+                        <li> <a href="#">Pumpkin Pottage</a> </li>
+                        <li> <a href="#">Arabica Roasted</a> </li>
+                        <li> <a href="#">Cafe Latte</a> </li>
+                        <li> <a href="#">Cappucino</a> </li>
+                        <li> <a href="#">Espresso</a> </li>
+                        <li> <a href="#">Italian Coffee</a> </li>
+                        <li> <a href="#">Arabica</a> </li>
+                      </ul>
+                      <ul>
+                        <li> <a href="#">Cappucino</a> </li>
+                        <li> <a href="#">Mocha</a> </li>
+                        <li> <a href="#">Mixed Sorts</a> </li>
+                        <li> <a href="#">Robusta Roasted</a> </li>
+                        <li> <a href="#">Cappucino</a> </li>
+                        <li> <a href="#">Creamy</a> </li>
+                        <li> <a href="#">Marijuana Extract</a> </li>
+                        <li> <a href="#">Strong</a> </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="andro_category-mm-item"> <a href="#"> Cappucino</a> </li>
+
+                <li class="andro_category-mm-item andro_category-mm-item-has-children">
+                  <a href="#">Rich espresso</a>
+                  <ul class="andro_category-mm-2-cols">
+                    <!-- Level 2 -->
+                    <li>
+                      <div class="andro_category-mm-banner">
+                        <img src="/static/img/megamenu/2.jpg" alt="megamenu img">
+                        <div class="andro_category-mm-banner-desc">
+                          <h6>Ice Coffee</h6>
+                          <p>Hand picked baskets for your organic goods</p>
+                        </div>
+                      </div>
+                      <ul>
+                        <li> <a href="#">Espresso and milk</a> </li>
+                        <li> <a href="#">Pumpkin Pottage</a> </li>
+                        <li> <a href="#">Pumpkin Pottage</a> </li>
+                        <li> <a href="#">Arabica Roasted</a> </li>
+                        <li> <a href="#">Cafe Latte</a> </li>
+                      </ul>
+                      <ul>
+                        <li> <a href="#">Cappucino</a> </li>
+                        <li> <a href="#">Espresso</a> </li>
+                        <li> <a href="#">Italian Coffee</a> </li>
+                        <li> <a href="#">Arabica</a> </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="andro_category-mm-item"> <a href="#"> Arabica Roasted </a> </li>
+                <li class="andro_category-mm-item"> <a href="#"> Espresso</a> </li>
+                <li class="andro_category-mm-item"> <a href="#"> Mocha</a> </li>
+                <li class="andro_category-mm-item"> <a href="#">Risotto</a> </li>
+                <li class="andro_category-mm-item andro_category-mm-item-has-children andro_category-mm-item-expand">
+                  <a href="#"> <i class="fas fa-plus"></i> More Categories</a>
+                  <ul class="andro_category-mm-2-cols">
+                    <!-- Level 2 -->
+                    <li>
+                      <div class="andro_category-mm-banner">
+                        <img src="/static/img/megamenu/3.jpg" alt="megamenu img">
+                        <div class="andro_category-mm-banner-desc">
+                          <h6>More Categories</h6>
+                          <p>Explore more categories that we offer</p>
+                        </div>
+                      </div>
+                      <ul>
+                        <li> <a href="#">Espresso and milk</a> </li>
+                        <li> <a href="#">Pumpkin Pottage</a> </li>
+                        <li> <a href="#">Pumpkin Pottage</a> </li>
+                        <li> <a href="#">Arabica Roasted</a> </li>
+                        <li> <a href="#">Cafe Latte</a> </li>
+                      </ul>
+                      <ul>
+                        <li> <a href="#">Cappucino</a> </li>
+                        <li> <a href="#">Espresso</a> </li>
+                        <li> <a href="#">Italian Coffee</a> </li>
+                        <li> <a href="#">Arabica</a> </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+          <!-- Menu -->
+          <ul class="navbar-nav">
+            <li class="menu-item menu-item-has-children">
+              <a href="#">Home Pages</a>
+              <ul class="sub-menu">
+                <li class="menu-item"> <a href="index.html">Home v1</a> </li>
+                <li class="menu-item"> <a href="home-v2.html">Home v2</a> </li>
+                <li class="menu-item"> <a href="home-v3.html">Home v3</a> </li>
+              </ul>
+            </li>
+            <li class="menu-item menu-item-has-children">
+              <a href="#">Blog</a>
+              <ul class="sub-menu">
+                <li class="menu-item menu-item-has-children">
+                  <a href="blog-grid.html">Blog Archive</a>
+                  <ul class="sub-menu">
+                    <li class="menu-item"> <a href="blog-grid.html">Grid View</a> </li>
+                    <li class="menu-item"> <a href="blog-list.html">List View</a> </li>
+                    <li class="menu-item"> <a href="blog-masonry.html">Masonry View</a> </li>
+                  </ul>
+                </li>
+                <li class="menu-item"> <a href="post-single.html">Blog Single</a> </li>
+              </ul>
+            </li>
+            <li class="menu-item menu-item-has-children">
+              <a href="#">Pages</a>
+              <ul class="sub-menu">
+                <li class="menu-item"> <a href="about-us.html">About Us</a> </li>
+                <li class="menu-item"> <a href="login.html">Login</a> </li>
+                <li class="menu-item"> <a href="register.html">Sign Up</a> </li>
+                <li class="menu-item"> <a href="checkout.html">Checkout</a> </li>
+                <li class="menu-item"> <a href="cart.html">Cart</a> </li>
+                <li class="menu-item"> <a href="wishlist.html">Wish List</a> </li>
+                <li class="menu-item"> <a href="legal.html">Legal</a> </li>
+                <li class="menu-item"> <a href="error.html">Error 404</a> </li>
+              </ul>
+            </li>
+            <li class="menu-item menu-item-has-children mega-menu-wrapper">
+              <a href="shop-v1.html">Shop</a>
+              <ul class="sub-menu">
+                <li>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <div class="mega-menu-item">
+                          <h6>Membership Delivery</h6>
+                          <p>
+                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,
+                            making it over 2000 years old.
+                          </p>
+                          <a href="login.html" class="andro_btn-custom shadow-none btn-sm">Become a Member</a>
+                        </div>
+                      </div>
+                      <div class="offset-lg-1 col-lg-3">
+                        <div class="mega-menu-item">
+                          <h6>Shop Pages</h6>
+                          <a href="shop-v1.html">Shop v1 (Default)</a>
+                          <a href="shop-v2.html">Shop v2 (Full Width)</a>
+                          <a href="shop-v3.html">Shop v3 (No Sidebar)</a>
+                          <a href="shop-v4.html">Shop v4 (List view)</a>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="mega-menu-item">
+                          <h6>Product Details Pages</h6>
+                          <a href="product-single.html">Product Details v1</a>
+                          <a href="product-single-v2.html">Product Details v2</a>
+                          <a href="#" class="coming-soon">Product Details v3 <span>Coming Soon</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item"> <a href="contact-us.html">Contact Us</a> </li>
+          </ul>
+
+          <!-- Side navigation toggle -->
+          <div class="aside-toggler aside-trigger-right desktop-toggler">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <!-- Bottom Header End -->
+
+  </header>
+  {% block log %}
+  <!-- --------------------------- -->
+  <div class="section">
+    <div class="imgs-wrapper">
+      <img src="/static/img/products/1.png" alt="veg" class="d-none d-lg-block">
+      <img src="/static/img/products/14.png" alt="veg" class="d-none d-lg-block">
+    </div>
+    <div class="container">
+      <div class="andro_auth-wrapper">
+
+        <div class="andro_auth-description bg-cover bg-center dark-overlay dark-overlay-2" style="background-image: url('/static/img/auth.jpg')">
+          <div class="andro_auth-description-inner">
+            <i class="flaticon-coffee-cup"></i>
+            <h2>Welcome Back!</h2>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          </div>
+        </div>
+        <div class="andro_auth-form">
+
+          <h2>登陆</h2>
+
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入邮箱" name="email" id="usEmail">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="请输入密码" name="password" value="" id="usPassword">
+            </div>
+            <a href="#">Forgot Password?</a>
+            <button type="submit" class="andro_btn-custom primary" id="usLogin">Login</button>
+
+            <div class="andro_auth-seperator">
+              
+              <span>OR</span>
+            </div>
+
+            <div class="andro_social-login">
+              <button type="button" class="andro_social-login-btn facebook"><i class="fab fa-facebook-f"></i> Continue with Facebook </button>
+              <button type="button" class="andro_social-login-btn google"><i class="fab fa-google"></i> Continue with Google</button>
+            </div>
+
+            <p>Don't have an account? <a href="register.html">Create One</a> </p>
+
+            <script>
+              $(function(){
+                
+                $("#usLogin").click(function(){
+                  var usemial = $("#usEmail").val()
+                  var uspassword = $("#usPassword").val()
+                  var userInfo = {
+                  'email':usemial,
+                  'password':uspassword
+                }
+                  $.ajax({
+                    url:'http://176.215.122.8:8000/v1/ustoken',
+                    type:'POST',
+                    contentType:"application/json",
+                    dataType:'json',
+                    data:JSON.stringify(userInfo),
+                    success:function(res){
+                      if (res.code == 200){
+                        alert("登陆成功")
+                        window.localStorage.setItem('cofst_token',res.data.token);
+                        window.localStorage.setItem('cofst_userid',res.data.userId);
+                        window.location.href = '/index';
+                      }else{
+                        alert(res.error)
+                      }
+
+                    },
+                  })
+                })
+
+              })
+            </script>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+ <!-- Instagram Start -->
+ <div class="row no-gutters">
+  <div class="col-lg-4 primary-bg pattern-bg">
+    <div class="andro_instagram">
+      <h3 class="text-white">Follow Us On Instagram</h3>
+      <a href="#" class="andro_btn-custom light">Follow Us</a>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="row no-gutters">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-6 p-0">
+        <a href="#" class="andro_ig-item">
+          <img src="/static/img/ig/1.jpg" alt="ig">
+        </a>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-6 p-0">
+        <a href="#" class="andro_ig-item">
+          <img src="/static/img/ig/2.jpg" alt="ig">
+        </a>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-6 p-0">
+        <a href="#" class="andro_ig-item">
+          <img src="/static/img/ig/3.jpg" alt="ig">
+        </a>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-6 p-0">
+        <a href="#" class="andro_ig-item">
+          <img src="/static/img/ig/4.jpg" alt="ig">
+        </a>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-6 p-0">
+        <a href="#" class="andro_ig-item">
+          <img src="/static/img/ig/5.jpg" alt="ig">
+        </a>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-6 p-0">
+        <a href="#" class="andro_ig-item">
+          <img src="/static/img/ig/6.jpg" alt="ig">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Instagram End -->
+{% endblock %}
+<!-- Footer Start -->
+<footer class="andro_footer">
+  <!-- Top Footer -->
+  <div class="container">
+    <div class="andro_footer-top">
+      <div class="andro_footer-logo">
+        <img src="/static/img/logo.png" alt="logo">
+      </div>
+      <div class="andro_footer-buttons">
+        <a href="#"> <img src="/static/img/android.png" alt="download it on the app store"></a>
+        <a href="#"> <img src="/static/img/ios.png" alt="download it on the app store"></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Middle Footer -->
+  <div class="andro_footer-middle">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 footer-widget">
+          <h5 class="widget-title">Information</h5>
+          <ul>
+            <li> <a href="index.html">Home</a> </li>
+            <li> <a href="blog-grid.html">Blog</a> </li>
+            <li> <a href="about-us.html">About Us</a> </li>
+            <li> <a href="shop-v1.html">Shop</a> </li>
+            <li> <a href="contact-us.html">Contact Us</a> </li>
+          </ul>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 footer-widget">
+          <h5 class="widget-title">Top Categories</h5>
+          <ul>
+            <li> <a href="#">Cafe Latte</a> </li>
+            <li> <a href="#">Ice Coffee</a> </li>
+            <li> <a href="#">Mocha</a> </li>
+            <li> <a href="#">Cappucino</a> </li>
+            <li> <a href="#">Espresso</a> </li>
+          </ul>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 footer-widget">
+          <h5 class="widget-title">Others</h5>
+          <ul>
+            <li> <a href="checkout.html">Checkout</a> </li>
+            <li> <a href="cart.html">Cart</a> </li>
+            <li> <a href="product-single.html">Product</a> </li>
+            <li> <a href="shop-v1.html">Shop</a> </li>
+            <li> <a href="legal.html">Legal</a> </li>
+          </ul>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 footer-widget">
+          <h5 class="widget-title">Social Media</h5>
+          <ul class="social-media">
+            <li> <a href="#" class="facebook"> <i class="fab fa-facebook-f"></i> </a> </li>
+            <li> <a href="#" class="pinterest"> <i class="fab fa-pinterest-p"></i> </a> </li>
+            <li> <a href="#" class="google"> <i class="fab fa-google"></i> </a> </li>
+            <li> <a href="#" class="twitter"> <i class="fab fa-twitter"></i> </a> </li>
+          </ul>
+          <div class="andro_footer-offer">
+            <p>Signup and get exclusive offers and coupon codes</p>
+            <a href="#" class="andro_btn-custom btn-sm shadow-none">Sign Up</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="andro_footer-bottom">
+    <div class="container">
+      <ul>
+        <li> <a href="#">Privacy Policy</a> </li>
+        <li> <a href="#">Refund Policy</a> </li>
+        <li> <a href="#">Cookie Policy</a> </li>
+        <li> <a href="#">Terms & Conditions</a> </li>
+      </ul>
+      <div class="andro_footer-copyright">
+        <p> Copyright © 2020 <a href="#">Yourwebsite</a> All Rights <a href="http://www.bootstrapmb.com/">bootstrapmb</a>. </p>
+        <a href="#" class="andro_back-to-top">Back to top <i class="fas fa-chevron-up"></i> </a>
+      </div>
+    </div>
+  </div>
+
+</footer>
+<!-- Footer End -->
+
+<!-- Vendor Scripts -->
+<script src="/static/js/plugins/jquery-3.4.1.min.js"></script>
+<script src="/static/js/plugins/popper.min.js"></script>
+<script src="/static/js/plugins/waypoint.js"></script>
+<script src="/static/js/plugins/bootstrap.min.js"></script>
+<script src="/static/js/plugins/jquery.magnific-popup.min.js"></script>
+<script src="/static/js/plugins/jquery.slimScroll.min.js"></script>
+<script src="/static/js/plugins/imagesloaded.min.js"></script>
+<script src="/static/js/plugins/jquery.steps.min.js"></script>
+<script src="/static/js/plugins/jquery.countdown.min.js"></script>
+<script src="/static/js/plugins/isotope.pkgd.min.js"></script>
+<script src="/static/js/plugins/slick.min.js"></script>
+<script src="/static/js/plugins/ion.rangeSlider.min.js"></script>
+<script src="/static/js/plugins/jquery.zoom.min.js"></script>
+
+
+<!-- Coffeez Scripts -->
+<script src="/static/js/main.js"></script>
+
+</body>
+
+</html>

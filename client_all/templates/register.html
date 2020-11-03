@@ -1,0 +1,145 @@
+﻿{% extends 'login.html' %}
+{% block log %}
+  <div class="section">
+    <div class="imgs-wrapper">
+      <img src="/static/img/products/1.png" alt="veg" class="d-none d-lg-block">
+      <img src="/static/img/products/14.png" alt="veg" class="d-none d-lg-block">
+    </div>
+    <div class="container">
+      <div class="andro_auth-wrapper">
+
+        <div class="andro_auth-description bg-cover bg-center dark-overlay dark-overlay-2" style="background-image: url('/static/img/auth.jpg')">
+          <div class="andro_auth-description-inner">
+            <i class="flaticon-coffee-cup"></i>
+            <h2>Hello World!</h2>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          </div>
+        </div>
+        <div class="andro_auth-form">
+
+          <h3>注册</h3>
+
+
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入用户名" name="username" value="" id='nicknameL'>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control form-control-light" placeholder="请输入邮箱" name="email" value="" id='emailL'>
+            </div>
+            <div class="row">
+              <div class="form-group col-xl-8">
+                <input type="text" class="form-control" placeholder="请输入六位数验证码" name="password_2" value="" id='authCode'>
+              </div>
+              <div class="form-group col-xl-4">
+                <div style="background-color: rgb(201, 201, 201); width: 100%;height:100%;line-height: 50px;cursor:pointer;" id='fsaCode'>获取验证码</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="请输入密码" name="password_1" value="" id="password1">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="请输再次入密码" name="password_1" value="" id="password2">
+            </div>
+            
+            <button type="submit" class="andro_btn-custom primary" id="nowRegister">立即注册</button>
+            <br><br>
+            <br>
+            <p>Already have an account? <a href="login.html">Login</a> </p>
+
+            <script>
+              $(function(){
+                $('#nowRegister').click(function(){
+                  var nickname = $('#nicknameL').val()
+                  var email = $('#emailL').val()
+                  var authCode = $("#authCode").val()
+                  var password1 = $('#password1').val()
+                  var password2 = $('#password2').val()
+                  // 初始化用户数据
+                  var userData = {
+                    "nickname":nickname,
+                    "email":email,
+                    "authCode":authCode,
+                    "password1":password1,
+                    "password2":password2
+                  }
+
+                  $.ajax({
+                    url:"http://176.215.122.8:8000/v1/user",
+                    type:'POST',
+                    dataType:'json',
+                    contentType:"application/json",
+                    data:JSON.stringify(userData),
+                    success:function(res){
+                      if(res.code=="200"){
+                        alert("注册成功")
+                      }else{
+                        alert(res.error)
+                      } 
+                    }
+                    
+                    
+                  })
+                })
+              })
+
+              
+            var timeClock;
+            function sendCode() {
+                var timer_num = 60;
+                timeClock=setInterval(function(){
+                    timer_num--;
+                    $('#fsaCode').html(`<span style="font-weight: 20px;color: azure;"><b>${timer_num}</b></span>`);
+                    
+                    if (timer_num == 0) {
+                        clearInterval(timeClock);
+                        $('#fsaCode').html("获取验证码");
+                    } 
+                },1000)
+            
+            }
+            $("#fsaCode").click(function(){
+              var email = $('#emailL').val();
+
+              if(email==''){
+                alert('邮箱不能为空')
+                return
+              }
+              
+
+              sendCode();
+              $.ajax({
+                url:'http://176.215.122.8:8000/v1/user/varcode',
+                type:'POST',
+                dataType:'json',
+                contentType:'application/json',
+                data:JSON.stringify({"email":email}),
+                success:function(res){
+                  if(res.code=='200'){
+                    alert('验证码已发送')
+                    console.log(res)
+                    console.log(1)
+                  }else{
+                    alert(res.error)
+                  }
+                },
+              })
+
+
+            })
+            </script>
+
+            <!-- <div class="andro_auth-seperator">
+              <span>OR</span>
+            </div>
+
+            <div class="andro_social-login">
+              <button type="button" class="andro_social-login-btn facebook"><i class="fab fa-facebook-f"></i> Continue with Facebook </button>
+              <button type="button" class="andro_social-login-btn google"><i class="fab fa-google"></i> Continue with Google</button>
+            </div> -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

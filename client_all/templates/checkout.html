@@ -1,0 +1,356 @@
+﻿{% extends 'index.html' %}
+{% block body %}
+  <!-- Subheader Start -->
+  <div class="andro_subheader pattern-bg primary-bg">
+    <div class="container">
+      <div class="andro_subheader-inner">
+        <h1>Checkout</h1>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Shop</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- Subheader End -->
+
+  <!-- Checkout Start -->
+  <div class="section">
+    <div class="container">
+
+      <!-- <form method="post"> -->
+        <div class="row">
+          <div class="col-xl-7">
+
+            <!-- Login -->
+            <!-- <div class="andro_notice">
+              <p>Are you a returning customer? <a href="#">Click here to login</a> </p>
+            </div> -->
+            <div class="andro_notice-content">
+              <div class="row">
+                <div class="col-xl-6 form-group">
+                  <label>Email Address</label>
+                  <input type="text" class="form-control" name="login-email" placeholder="Email Address" value="">
+                </div>
+                <div class="col-xl-6 form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" name="login-pass" placeholder="Password" value="">
+                </div>
+                <div class="col-12 form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="rememberMe">
+                    <label class="custom-control-label" for="rememberMe">Remember Me</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="andro_btn-custom shadow-none btn-sm" name="button">Login</button>
+                </div>
+              </div>
+            </div>
+            <!-- Coupon Code -->
+            <!-- <div class="andro_notice">
+              <p>Do you have a coupon code? <a href="#">Click here to apply</a> </p>
+            </div> -->
+            <div class="andro_notice-content">
+              <p>If you have a coupon code, apply it below</p>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Coupon Code">
+                <div class="input-group-append">
+                  <button class="andro_btn-custom shadow-none" type="button">Apply Code</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Buyer Info Start -->
+            <h4>个人信息</h4>
+            <div class="row">
+              <div class="form-group col-xl-6">
+                <label>收货人 <span class="text-danger">*</span></label>
+                <input type="text" placeholder="First Name" name="fname" class="form-control" value="" required="">
+              </div>
+              <div class="form-group col-xl-6">
+                <label>收货人邮箱 <span class="text-danger">*</span></label>
+                <input id="youxiang" type="text" placeholder="Last Name" name="lname" class="form-control" value="" required="">
+              </div>
+              <!-- <div class="form-group col-xl-12">
+                <label>Company Name</label>
+                <input type="text" placeholder="Company Name (Optional)" name="cname" class="form-control" value="">
+              </div> -->
+              <div class="form-group col-xl-6">
+                <label>省份<span class="text-danger">*</span></label>
+                <select class="form-control"  id="shengs">
+                  <option value="" selected>- - -</option>
+
+                </select>
+              </div>
+              <div class="form-group col-xl-6">
+                <label>城市 <span class="text-danger">*</span></label>
+                <select class="form-control" id="citys">
+                  <option value="-1" selected>- - -</option>
+
+                </select>
+              </div>
+              <script src="../static/json/diqudata.js"></script>
+              <!-- 动态加载城市和省份的select -->
+              <script>
+                $(function(){
+                  $.each(diqu,function(k,v){
+                  $('#shengs').append(`<option value="${k}">${v['省']}</option>`)
+                })
+                $('#shengs').change(function(){
+                  if($(this).val()=='-1'){
+                    $('#citys').html('<option value="-1" selected>- - -</option>')
+                  }else{
+                    $('#citys').html('<option value="-1" selected>- - -</option>')
+                    var citys = diqu[$(this).val()]
+                    $.each(citys['市'],function(k,v){
+                      $('#citys').append(`<option value="${k}">${v}</option>`)
+                    })
+                  }
+                })
+                })
+              </script>
+              <!-- <div class="form-group col-xl-6">
+                <label>Street Address 1 <span class="text-danger">*</span></label>
+                <input type="text" placeholder="Street Address One" name="addr-1" class="form-control" value="" required="">
+              </div>
+              <div class="form-group col-xl-6">
+                <label>Street Address 2</label>
+                <input type="text" placeholder="Street Address Two (Optional)" name="addr-1" class="form-control" value="">
+              </div>
+              <div class="form-group col-xl-12">
+                <label>Town / City <span class="text-danger">*</span></label>
+                <input type="text" placeholder="Town/City" name="town" class="form-control" value="" required="">
+              </div>
+              <div class="form-group col-xl-6">
+                <label>Phone Number <span class="text-danger">*</span></label>
+                <input type="text" placeholder="Phone Number" name="phone" class="form-control" value="" required="">
+              </div>
+              <div class="form-group col-xl-6">
+                <label>Email Address <span class="text-danger">*</span></label>
+                <input type="email" placeholder="Email Address" name="email" class="form-control" value="" required="">
+              </div> -->
+              <div class="form-group col-xl-12 mb-0">
+                <label>具体地址</label>
+                <textarea id="juti" name="name" rows="5" class="form-control" placeholder="Order Notes (Optional)"></textarea>
+              </div>
+              <div class="form-group col-xl-12 mb-0">
+                <label>备注</label>
+                <textarea id="beizhu" name="name" rows="6" class="form-control" placeholder="Order Notes (Optional)"></textarea>
+              </div>
+              <div class="form-group col-xl-12 mb-0">
+                <p class="small">您的个人资料将用于处理您的订单，支持您在本网站的体验，以及用于我们的隐私政策中所述的其他目的。</p>
+                <button id="lijigm" type="submit" class="andro_btn-custom primary btn-block">立即购买</button>
+              </div>
+            </div>
+            <!-- Buyer Info End -->
+
+          </div>
+          <div class="col-xl-5 checkout-billing">
+            <!-- Order Details Start -->
+            <h4>订单信息</h4>
+            <table class="andro_responsive-table">
+              <thead>
+                <tr>
+                  <th>商品</th>
+                  <th>数量</th>
+                  <th>总价</th>
+                </tr>
+              </thead>
+              <tbody id='goodsli'>
+
+              <tfoot>
+            <!-- 总价 -->
+            <tr class="total">
+              <td>
+                <h6 class="mb-0">总价</h6>
+              </td>
+              <td></td>
+              <td> <strong id='zongjia'></strong> </td>
+            </tr>
+            <!-- 单号 -->
+            <tr class="total">
+              <td>
+                <h6 class="mb-0">订单编号</h6>
+              </td>
+              <td colspan="3" style="text-align: center;" id="bianhao"></td>
+            </tr>
+          </tbody>
+              </tfoot>
+            </table>
+            <script>
+
+                
+              
+                // function alizf(post_data){
+                //     $("#Btn_pay").click(function () {
+                //         $.ajax({
+                //             url:"http://176.215.122.8:8000/cofpay/1",
+                //             type:"post",
+                //     contentType: "application/json",
+                //             dataType:"json",
+                //     data: JSON.stringify(post_data),
+                //             success:function (data) {
+                //               console.log(data)
+                //                 window.location = data.pay_url
+                //             },
+                //             error:function(errors){
+                //                 console.log("错误")
+                //                 console.log(errors)
+                //             }
+                //         })
+                //     })
+                // }
+
+              $(function(){
+                var user_id = window.localStorage.getItem('cofst_userid');
+                var token = window.localStorage.getItem('cofst_token');
+                var cofst_indent = window.localStorage.getItem('cofst_indent');
+                if(cofst_indent==null){
+                  alert('未选购商品')
+                  window.location.href='/index'
+                }else{
+                /*
+                {"code":"200","seroal":seroal,"all_total":all_total
+                "goods":[{"name":tgoods.name,"num":num,"total":tgoods.price*num}],
+                "user_info":{"email":user.email,"sheng":user.address,"city":user.city,"detailed_address":user.detailed_address}}
+                */
+                var indent_html = ''
+                $.ajax({
+                  url:'http://176.215.122.8:8000/v1/indent/'+user_id,
+                  type:'POST',
+                  contentType:'applications/json',
+                  data:cofst_indent,
+                  dataType:'json',
+                  beforeSend:function(request){request.setRequestHeader('Authorization',token)},
+                  success:function(res){
+                    if(res.code=='200'){
+                      
+                      // 接收数据 写入前端 商品数据
+                      $.each(res.goods,function(i,o){
+                        console.log(o)
+                        indent_html = ''
+                        indent_html+='<tr>'
+                        indent_html+='<td data-title="Product">'
+                        indent_html+='<div class="andro_cart-product-wrapper">'
+                        indent_html+='<div class="andro_cart-product-body">'
+                        indent_html+=`<h6>${o.name}</h6>'`
+                        indent_html+='</div>'
+                        indent_html+='</div>'
+                        indent_html+='</td>'
+                        indent_html+=`<td data-title="Quantity">x${o.num}</td>`
+                        indent_html+=`<td data-title="Total"> <strong id="toj">${o.total}元</strong> </td>`
+                        indent_html+='</tr>'
+                        $('#goodsli').append(indent_html)
+                      })
+                      indent_html = ''
+                      // 写入订单数据
+                      $("#zongjia").html(res.all_total+'元')
+                      $("#bianhao").html(res.seroal)
+                      // console.log(res)
+                      // 写入用户数据
+                      $("#youxiang").val(res.user_info.email)
+                      // $("#shengs").val(res.user_info.sheng)
+                      // $("#citys").val(res.user_info.city)
+                      $("#juti").val(res.user_info.detailed_address)
+                      // console.log(res.user_info.email)
+
+                      window.localStorage.removeItem('cofst_indent')
+
+
+                    }else if(res.code=="60001"){
+                      alert(res.error)
+                      window.location.href='/login'
+                      window.localStorage.removeItem('cofst_indent')
+
+                    }else{
+                      alert(res.error)
+                      window.localStorage.removeItem('cofst_indent')
+                      
+                    }
+                  }
+
+                })}
+              })
+
+              $("#lijigm").click(function(){
+                var user_id = window.localStorage.getItem('cofst_userid');
+                var email = $("#youxiang").val();
+                var shengs = $("#shengs").val();
+                var citys = $("#citys").val();
+                var juti = $("#juti").val();
+                var beizhu = $("#beizhu").val();
+                // console.log(shengs)
+                var token = window.localStorage.getItem('cofst_token');
+                // console.log()
+                if (email=='' || shengs=='' || citys==''|| juti==''){
+                  alert('个人信息不能为空')
+                }else{
+                  $.ajax({
+                    url:'http://176.215.122.8:8000/v1/indent/'+user_id,
+                    type:'post',
+                    dataType:'json',
+                    beforeSend:function(request){
+                      request.setRequestHeader('Authorization',token);
+                    },
+                    contentType:'appliction/json',
+                    data:JSON.stringify({
+                      "host":"checkout",
+                      "email":email,
+                      "seroal":$("#bianhao").text(),
+                      "shengs":shengs,
+                      "citys":citys,
+                      "juti":juti,
+                      "beizhu":beizhu,
+                    }),
+                    success:function(res){
+                      if(res.code==200){
+                        console.log(res.code)
+                        // post_data = {"order_id": $("#bianhao").text(),"jine":$("#toj").text()}
+                        // alizf(post_data)
+                        window.location.href = '/zf'
+                      }else{
+                        alert(res.error)
+                      }
+                    },
+                  })
+                }
+              })
+
+            </script>
+            <!-- <div class="form-group">
+              <label>Card Number</label>
+              <input type="text" class="form-control" name="master-number" placeholder="Card Number" value="">
+            </div>
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" class="form-control" name="master-name" placeholder="Full Name" value="">
+            </div>
+            <div class="row">
+              <div class="col-xl-6 form-group">
+                <label>Expiry Date</label>
+                <input type="text" class="form-control" name="master-expiry" placeholder="Expiry Date (MM/YY)" value="">
+              </div>
+              <div class="col-xl-6 form-group">
+                <label>CVV*</label>
+                <input type="number" class="form-control" name="master-cvv" placeholder="CVV" value="">
+              </div>
+            </div>
+
+            <p class="small">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a class="btn-link" href="#">privacy policy.</a> </p>
+            <button type="submit" class="andro_btn-custom primary btn-block">Place Order</button> -->
+
+            <!-- Order Details End -->
+
+          </div>
+        </div>
+      <!-- </form> -->
+
+    </div>
+  </div>
+  <!-- Checkout End -->
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'index.html' %}
+{% block body %}
+  <!-- Subheader Start -->
+  <div class="andro_subheader pattern-bg primary-bg">
+    <div class="container">
+      <div class="andro_subheader-inner">
+        <h1>Blog List</h1>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Blog</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Blog List</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- Subheader End -->
+
+  <!-- Blog Posts Start -->
+  <div class="section">
+    <div class="container">
+
+      <!-- Article Start -->
+
+    <table style="height: 35px;">
+        <thead>
+            <td>订单编号</td>
+            <td>订单信息</td>
+            <td>创建时间</td>
+            <td>状态</td> 
+            <td>操作</td>
+        </thead>
+        <tbody id="ddantal">
+
+        </tbody>
+    </table>
+    <div id="tgl" style="text-align: center;">
+      
+    </div>
+
+    </div>
+  </div>
+
+  <script>
+    $(function(){
+      var token = window.localStorage.getItem('cofst_token')
+      var user_id = window.localStorage.getItem('cofst_userid')
+      var td_html = ''
+      $.ajax({
+            url:`http://176.215.122.8:8000/v1/indent/${user_id}`,
+            type:"GET",
+            // 传输的数据类型
+            // contentType:"application/json",
+            // 接收的数据类型
+            contentType:'application/json',
+            dataType:"json",
+            beforeSend:function(request){
+              request.setRequestHeader("Authorization", token);
+            },
+            success:function(res){
+              if (res.code==200){
+              if(res.data.length==0){
+                $('#tgl').append('<h4>空空如也</h4>')
+              }else{
+                $.each(res.data,function(i,o){
+                  td_html = ''
+                  td_html += '<tr>'
+                  td_html += `<td>${o.nid}</td>`
+                  td_html += `<td>${o.remark}</td>`
+                  td_html += `<td>${o.create_time}</td>`
+                  td_html += `<td>${o.zhuangt}</td>`
+                  td_html += o.zhuangt === '已支付' ? '<td>/</td>':`<td><a class="zhf" value="${o.nid}" href="#">支付</a>&nbsp;/&nbsp;<a class="sanc" value="${o.nid}" href="#">删除</a></td>`
+                  td_html += '<tr>'
+                  $("#ddantal").append(td_html)
+
+
+
+                });
+                td_html = ''
+
+                // $(".zhf").click
+                $(".sanc").click(function(){
+                  var token = window.localStorage.getItem('cofst_token')
+                  var user_id = window.localStorage.getItem('cofst_userid')
+                  var nid = $(this).attr('value')
+                  $.ajax({
+                    url:`http://176.215.122.8:8000/v1/indent/${user_id}`,
+                    type:'delete',
+                    data:JSON.stringify({"nid":nid}),
+                    dataType:'json',
+                    contentType:'appliction/json',
+                    beforeSend:function(request){
+              request.setRequestHeader("Authorization", token);},
+                    success:function(res){
+                      console.log(res)
+                      if(res.code==200){
+                        // alert("删除成功")
+                        location.reload();
+                      }else(
+                        alert(res.error)
+                        
+                      )
+
+                    },
+                  })
+                })
+
+              }
+            }else{
+              alert(res.error)
+              window.location.href = '/login';
+            }
+            },
+      })
+    })
+  </script>
+  <!-- Blog Posts End -->
+{% endblock %}

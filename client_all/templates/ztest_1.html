@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1</title>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        function rand(min,max) {
+            return Math.floor(Math.random()*(max-min))+min;
+       }
+    
+       //模拟数据 向后端传订单id
+       var random_id = rand(1000,9999)
+       var order_id = "2019111821315602" + random_id.toString()
+    post_data = {"order_id": order_id}
+       console.log(post_data)
+    
+       $(function(){
+           $("#Btn_pay").click(function () {
+               $.ajax({
+                   url:"http://176.215.122.8:8000/cofpay/1",
+                   type:"post",
+           contentType: "application/json",
+                   dataType:"json",
+           data: JSON.stringify(post_data),
+                   success:function (data) {
+                       window.location = data.pay_url
+                   },
+                   error:function(errors){
+                       console.log("错误")
+                       console.log(errors)
+                   }
+               })
+           })
+       })
+    </script>
+    <button id="Btn_pay">点击暴富</button>
+
+  
+</body>
+</html>

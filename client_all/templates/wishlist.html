@@ -1,0 +1,180 @@
+﻿{% extends 'index.html' %}
+{% block body %}
+<!-- Subheader Start -->
+<div class="andro_subheader pattern-bg primary-bg">
+  <div class="container">
+    <div class="andro_subheader-inner">
+      <h1>Wishlist</h1>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Shop</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- Subheader End -->
+
+<!-- Wishlist Start -->
+<div class="section">
+  <div class="container">
+
+    <!-- Wishlist Table Start -->
+    <div id="wish-list">
+    </div>
+    <!-- Wishlist Table End -->
+
+    <!-- Share Wishlist Start -->
+    <div class="text-center">
+      <h5>分享你的愿望清单</h5>
+      <div class="andro_post-share">
+        <ul class="andro_sm justify-content-center">
+          <li> <a href="#" data-toggle="tooltip" title="" data-original-title="Share on Facebook"> <i
+                class="fab fa-facebook-f"></i> </a> </li>
+          <li> <a href="#" data-toggle="tooltip" title="" data-original-title="Share on Twitter"> <i
+                class="fab fa-twitter"></i> </a> </li>
+          <li> <a href="#" data-toggle="tooltip" title="" data-original-title="Share on Linkedin"> <i
+                class="fab fa-linkedin-in"></i> </a> </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Share Wishlist End -->
+
+  </div>
+</div>
+<!--  Wishlist End -->
+
+<script>
+  // var url = document.location.toString();
+  // url = url.split("?")[0]
+  // // 取最后一位
+  // url = url.split("//").pop()
+  // // 取最后一位
+  // user_id = url.split("/").pop()
+  var token = window.localStorage.getItem('cofst_token')
+  var user_id = window.localStorage.getItem('cofst_userid');
+  if (user_id==null){
+    alert('请先登陆');
+    window.location.href='/login';
+  }else{
+  var get_url = `http://176.215.122.8:8000/v1/favorite/${user_id}`;
+  var html_body = '';
+  $.ajax({
+    type: 'get',
+    url: get_url,
+    contentType: "application/json",
+    dataType: "json",
+    beforeSend: function(request){
+      request.setRequestHeader("Authorization", token);
+    },
+    success: function (res) {
+      var co = res.data;
+      if (res.code == 200) {
+        if (co.length == 0) {
+          html_body = '<h2>空空如也</h2>'
+        }
+        else {
+          html_body += '<table class="andro_responsive-table">';
+          html_body += '<thead>';
+          html_body += '<tr>';
+          html_body += '<th class="remove-item"></th>';
+          html_body += '<th>产品</th>';
+          html_body += '<th>价格</th>';
+          html_body += '<th>库存</th>';
+          html_body += '<th>动作</th>';
+          html_body += '</tr>';
+          html_body += '</thead>';
+          html_body += '<tbody>';
+          for (var t in co) {
+            var name = co[t].name;
+            var price = co[t].price;
+            var inventory = co[t].inventory;
+            var imgurl = co[t].imgurl;
+            var id = co[t].id;
+            var goods_id=co[t].goods_id
+            html_body += '<tr>';
+            html_body += '<td class="remove"  data=' + id + '>';
+            html_body += '<button type="button" class="close-btn close-danger remove-from-cart">';
+            html_body += '<span></span>';
+            html_body += '<span></span>';
+            html_body += '</button>';
+            html_body += '</td>';
+            html_body += '<td data-title="Product">';
+            html_body += '<div class="andro_cart-product-wrapper">';
+            html_body += '<img src=' + imgurl + ' alt="prod1">';
+            html_body += '<div class="andro_cart-product-body">';
+            html_body += '<h6> <a href="#">' + name + '</a> </h6>';
+            html_body += '</div>';
+            html_body += '</div>';
+            html_body += '</td>';
+            html_body += '<td data-title="Price"> <strong>￥' + price + '</strong> </td>';
+            html_body += '<td data-title="Availability">';
+            html_body += '<span class="andro_product-stock instock">' + inventory + '</span>';
+            html_body += '</td>';
+            html_body += `<td data-title="Actions" class="add-cart" value=${goods_id}> <a href="#" class="andro_btn-custom btn-sm shadow-none">添加到购物车</a> </td>`;
+            html_body += '</tr>';
+          }
+          html_body += '</tbody></table>';
+        }
+        $("#wish-list").append(html_body);
+        $('.remove').on('click', function () {
+          var delete_id = $(this).attr('data');
+          // alert(delete_id);
+          var delete_url = `http://176.215.122.8:8000/v1/favorite/${user_id}/goods_id/${delete_id}`;
+          $.ajax({
+            type: 'delete',
+            url: delete_url,
+            beforeSend: function (request) {
+              request.setRequestHeader("Authorization", token);
+            },
+            success: function (res) {
+              if (res.code == 200) {
+                alert('删除成功');
+                window.location.reload()
+              } else {
+                alert('删除失败');
+              }
+            }
+          })
+        });
+        $('.add-cart').click(function () {
+                      var goods_id = $(this).attr('value');
+                      var add_heart_url = `http://176.215.122.8:8000/v1/cart/${user_id}`;
+                      var post_data = {'goods_id': goods_id};
+                      // alert(goods_id);
+                      $.ajax({
+                        type: "post",
+                        // contentType 
+                        contentType: "application/json",
+                        beforeSend: function (request) {
+                        request.setRequestHeader("Authorization", token);
+                      },
+                        // dataType
+                        dataType: "json",
+                        url: add_heart_url,
+                        data: JSON.stringify(post_data),
+                        // beforeSend: function (request) {
+                        //   request.setRequestHeader("Authorization", token);
+                        // },
+                        success: function (res) {
+                          if (res.code == 200) {
+                            alert('成功添加到购物车')
+                          }
+                          else {
+                            alert(res.error)
+                          }
+                        }
+                      })
+                    })
+      }
+      else {
+        alert('身份已过期,请重新登陆');
+        window.location.href='/login';
+      }
+    }
+  });
+}
+</script>
+{% endblock %}
